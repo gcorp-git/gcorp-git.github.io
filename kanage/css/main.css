@@ -1,0 +1,54 @@
+:root {
+    --unit-size: 80px;
+    --gap-size: 20px;
+
+    --controls-unit-size: 50px;
+    --controls-gap-size: 10px;
+
+    --font-family-west: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+    --font-family-east: 'Yu Gothic', Arial, Helvetica, sans-serif;
+    --font-family-mono: 'Courier New', Courier, monospace;
+    --font-family-icon: Arial, Helvetica, sans-serif;
+    --font-size: 21px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+}
+* {
+    box-sizing: border-box;
+}
+
+/* Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+    display: none;
+}
+/* IE, Edge and Firefox */
+* {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.scroll-container-parent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.scroll-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+}

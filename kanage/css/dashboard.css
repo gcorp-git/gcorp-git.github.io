@@ -1,0 +1,511 @@
+#app[data-state="dashboard"] .app-column[data-category="body"] {
+    justify-content: center;
+}
+
+#dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-size);
+    width: 100%;
+    max-width: 800px;
+}
+#dashboard-tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--gap-size);
+}
+#dashboard-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    height: calc(100% - var(--unit-size));
+}
+
+#dashboard-tabs > .tab {
+    width: var(--unit-size);
+    height: var(--unit-size);
+    line-height: var(--unit-size);
+    vertical-align: middle;
+    text-align: center;
+    font-family: var(--font-family-mono);
+    font-size: calc(0.5 * var(--unit-size));
+    user-select: none;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--text-color);
+    transition-duration: 400ms;
+}
+#dashboard-tabs > .tab:hover {
+    border-color: var(--color-blue-light);
+    color: var(--color-blue-light);
+}
+#dashboard-tabs > .tab[data-is-opened="true"] {
+    background: var(--color-blue-dark);
+    border-color: var(--color-blue-dark);
+    color: var(--text-color-invert);
+}
+
+#dashboard .header {
+    padding-bottom: var(--controls-gap-size);
+}
+
+#dashboard .controls {
+    display: flex;
+    flex-direction: var(--flex-direction-row);
+    justify-content: end;
+    gap: var(--controls-gap-size);
+    width: 100%;
+}
+#dashboard .controls .filler {
+    display: flex;
+    flex-grow: 1;
+}
+#dashboard .controls .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: var(--controls-unit-size);
+    max-width: var(--controls-unit-size);
+    min-height: var(--controls-unit-size);
+    max-height: var(--controls-unit-size);
+    font-family: var(--font-family-mono);
+    font-size: calc(0.6 * var(--controls-unit-size));
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+#dashboard .controls .button:hover {
+    border-color: var(--border-color-hover);
+    color: var(--text-color-hover);
+}
+#dashboard .controls .button[disabled] {
+    opacity: 0.5;
+    color: transparent;
+}
+#dashboard .controls .button[data-action="add"] {
+    font-size: calc(0.8 * var(--controls-unit-size));
+}
+#dashboard .controls .button[data-action="edit"] {
+    font-size: calc(0.5 * var(--controls-unit-size));
+}
+#dashboard .controls .button[data-action="save"] {
+    border: 1px solid var(--border-color);
+    font-size: calc(0.5 * var(--controls-unit-size));
+}
+#dashboard .controls .button[data-action="save"]:hover {
+    border-color: var(--border-color-hover);
+}
+#dashboard .controls input {
+    display: flex;
+    width: 100%;
+    max-width: calc(8 * var(--controls-unit-size));
+    height: var(--controls-unit-size);
+    padding: 0 var(--controls-gap-size);
+    font-size: var(--font-size);
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    direction: var(--direction);
+    outline: none;
+}
+#dashboard .controls input:hover {
+    border-color: var(--border-color-hover);
+    color: var(--text-color-hover);
+}
+
+#dashboard .row {
+    display: flex;
+    flex-direction: var(--flex-direction-row);
+    align-items: start;
+    width: 100%;
+    min-height: var(--unit-size);
+    border-width: 0 1px 1px;
+    border-style: solid;
+    border-color: var(--border-color);
+    cursor: default;
+    position: relative;
+}
+#dashboard .row:hover {
+    border: 1px solid var(--border-color-hover);
+    margin-top: -1px;
+    z-index: 1;
+}
+#dashboard .row:first-child {
+    border-top-width: 1px;
+}
+#dashboard .row:first-child:hover {
+    margin-top: 0;
+    border-top-width: 1px;
+}
+#dashboard .row[data-is-checked]::before {
+    content: '☐';
+    display: inline-block;
+    min-width: var(--unit-size);
+    max-width: var(--unit-size);
+    min-height: var(--unit-size);
+    max-height: var(--unit-size);
+    line-height: var(--unit-size);
+    vertical-align: middle;
+    font-family: var(--font-family-east);
+    font-size: calc(0.4 * var(--unit-size));
+    text-align: center;
+    user-select: none;
+}
+#dashboard .row[data-is-checked="true"]::before {
+    content: '☑';
+    color: var(--color-accent);
+}
+#dashboard .row .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: var(--unit-size);
+    max-width: var(--unit-size);
+    min-height: var(--unit-size);
+    max-height: var(--unit-size);
+    font-family: var(--font-family-icon);
+    font-size: calc(0.5 * var(--unit-size));
+    user-select: none;
+}
+#dashboard .row .text {
+    display: flex;
+    flex-direction: var(--flex-direction-row);
+    flex-grow: 1;
+    align-items: center;
+    width: auto;
+    min-height: var(--unit-size);
+    padding: var(--gap-size);
+    user-select: none;
+}
+#dashboard .row .name {
+    display: inline-block;
+    width: 100%;
+    font-size: var(--font-size);
+    line-height: calc(0.50 * var(--unit-size));
+    direction: var(--direction);
+}
+
+#dashboard .modals .modal {
+    display: flex;
+    width: auto;
+    height: auto;
+    margin-top: var(--controls-gap-size);
+    background: transparent;
+    border: 1px solid var(--color-accent);
+    position: relative;
+}
+#dashboard .modals .modal .win {
+    width: 100%;
+    height: var(--unit-size);
+}
+#dashboard .modals .modal .close {
+    display: none;
+}
+#dashboard .modals .modal .content {
+    flex-direction: var(--flex-direction-row);
+    justify-content: start;
+    width: 100%;
+}
+#dashboard .modals .modal .column {
+    display: flex;
+    justify-content: center;
+    border: none;
+    font-size: var(--font-size);
+}
+#dashboard .modals .modal input {
+    display: flex;
+    width: 100%;
+    font-size: var(--font-size);
+    text-align: var(--text-align);
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    outline: none;
+}
+#dashboard .modals .modal input[name="translation"] {
+    unicode-bidi: bidi-override;
+    direction: var(--direction);
+}
+
+#dashboard-lessons[data-mode="add"] .controls .button[data-action="add"],
+#dashboard-lessons[data-mode="edit"] .controls .button[data-action="edit"],
+#dashboard-lessons[data-mode="remove"] .controls .button[data-action="remove"] {
+    background: var(--color-blue-dark);
+    border-color: var(--color-blue-dark);
+    color: var(--text-color-invert);
+}
+
+#dashboard-lessons .row .text {
+    padding-left: 0;
+}
+
+#dashboard-lessons[data-mode="remove"] .rows .row .icon.picture {
+    margin-left: calc(-1 * var(--gap-size));
+}
+#dashboard-lessons .rows.database .row .text {
+    padding: calc(0.25 * var(--unit-size)) var(--gap-size) calc(0.25 * var(--unit-size)) 0;
+}
+#dashboard-lessons .rows.database .row .text .name {
+    font-family: var(--font-family-west);
+}
+#dashboard-lessons .rows.database .row .text .translation,
+#dashboard-lessons .rows.database .row .text .kana,
+#dashboard-lessons .rows.database .row .text .kanji {
+    font-size: var(--font-size);
+}
+#dashboard-lessons .rows.database .row .text .translation {
+    width: 40%;
+    direction: var(--direction);
+}
+#dashboard-lessons .rows.database .row .text .kana {
+    width: 40%;
+    font-family: var(--font-family-east);
+    text-align: var(--text-align);
+}
+#dashboard-lessons .rows.database .row .text .kanji {
+    width: 20%;
+    font-family: var(--font-family-east);
+    text-align: var(--text-align);
+}
+
+#dashboard-lessons .modals .modal .icon-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: var(--unit-size);
+    max-width: var(--unit-size);
+    min-height: var(--unit-size);
+    max-height: var(--unit-size);
+    border: none;
+    font-size: calc(0.5 * var(--unit-size));
+    user-select: none;
+    cursor: pointer;
+}
+#dashboard-lessons .modals .modal .column-name {
+    flex-grow: 1;
+}
+
+#dashboard-lessons .modals .modal[data-id="edit"] .column-icon {
+    width: var(--unit-size);
+    height: var(--unit-size);
+    font-family: var(--font-family-icon);
+    font-size: calc(0.5 * var(--unit-size));
+    user-select: none;
+}
+#dashboard-lessons .modals .modal[data-id="edit"] input {
+    padding: 0 var(--gap-size) 0 0;
+    font-family: var(--font-family-west);
+}
+
+#dashboard-database .controls .button[data-action="import"],
+#dashboard-database .controls .button[data-action="export"] {
+    transform: rotateZ(-90deg);
+}
+
+#dashboard-database[data-mode="add"] .controls .button[data-action="add"],
+#dashboard-database[data-mode="edit"] .controls .button[data-action="edit"],
+#dashboard-database[data-mode="import"] .controls .button[data-action="import"],
+#dashboard-database[data-mode="export"] .controls .button[data-action="export"],
+#dashboard-database[data-mode="remove"] .controls .button[data-action="remove"] {
+    background: var(--color-blue-dark);
+    border-color: var(--color-blue-dark);
+    color: var(--text-color-invert);
+}
+
+#dashboard-database .rows .row .text .translation,
+#dashboard-database .rows .row .text .kana,
+#dashboard-database .rows .row .text .kanji {
+    font-size: var(--font-size);
+}
+#dashboard-database .rows .row .text .translation {
+    width: 40%;
+    direction: var(--direction);
+}
+#dashboard-database .rows .row .text .kana {
+    width: 40%;
+    font-family: var(--font-family-east);
+    text-align: var(--text-align);
+}
+#dashboard-database .rows .row .text .kanji {
+    width: 20%;
+    font-family: var(--font-family-east);
+    text-align: var(--text-align);
+}
+
+#dashboard-database .modals .modal .content {
+    padding: var(--gap-size);
+}
+#dashboard-database .modals .modal .column-translation {
+    width: 40%;
+}
+#dashboard-database .modals .modal .column-kana {
+    width: 40%;
+}
+#dashboard-database .modals .modal .column-kanji {
+    width: 20%;
+}
+#dashboard-database .modals .modal input[name="kana"] {
+    font-family: var(--font-family-east);
+}
+#dashboard-database .modals .modal input[name="kanji"] {
+    font-family: var(--font-family-east);
+}
+
+#dashboard-database .modals .modal[data-id="import"] .content {
+    padding: 0;
+}
+#dashboard-database .modals .modal[data-id="import"] .column-file {
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+#dashboard-database .modals .modal[data-id="import"] .label {
+    gap: var(--gap-size);
+    display: flex;
+    width: auto;
+    padding: calc(0.5 * var(--gap-size)) calc(1.5 * var(--gap-size));
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+#dashboard-database .modals .modal[data-id="import"] .label:hover {
+    border-color: var(--border-color-hover);
+    color: var(--text-color-hover);
+}
+#dashboard-database .modals .modal[data-id="import"] .icon {
+    transform: rotateZ(-90deg);
+}
+#dashboard-database .modals .modal[data-id="import"] .text {
+    font-family: var(--font-family-west);
+    font-size: var(--font-size);
+}
+
+#dashboard-database .modals .modal[data-id="export"] .column-buttons {
+    width: 100%;
+    justify-content: center;
+    gap: var(--gap-size);
+}
+#dashboard-database .modals .modal[data-id="export"] .button {
+    padding: 0 var(--gap-size);
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+#dashboard-database .modals .modal[data-id="export"] .button:hover {
+    border-color: var(--border-color-hover);
+    color: var(--text-color-hover);
+}
+
+.modal[data-id="icon"] {
+    --width: 5;
+    --height: 5;
+}
+.modal[data-id="icon"] .win {
+    padding: var(--gap-size);
+}
+.modal[data-id="icon"] .content {
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: var(--gap-size);
+    width: calc(var(--width) * var(--unit-size) + (var(--width) - 1) * var(--gap-size));
+    max-height: calc(var(--height) * var(--unit-size) + (var(--height) - 1) * var(--gap-size));
+    overflow-y: auto;
+}
+.modal[data-id="icon"] .controls{
+    display: flex;
+    gap: var(--gap-size);
+    width: 100%;
+}
+.modal[data-id="icon"] .tape {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-size);
+    width: 100%;
+}
+.modal[data-id="icon"] .button,
+.modal[data-id="icon"] input[name="icon"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--unit-size);
+    height: var(--unit-size);
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    font-family: var(--font-family-icon);
+    font-size: calc(0.5 * var(--unit-size));
+    color: var(--text-color);
+}
+.modal[data-id="icon"] .button {
+    cursor: pointer;
+}
+.modal[data-id="icon"] .button:hover {
+    border-color: var(--border-color-hover);
+    color: var(--text-color-hover);
+}
+.modal[data-id="icon"] input[name="icon"] {
+    border: 1px dashed var(--color-accent);
+    text-align: center;
+    outline: none;
+}
+.modal[data-id="icon"] input[name="icon"]::placeholder {
+    color: var(--color-accent);
+}
+.modal[data-id="icon"] input[name="icon"]:focus::placeholder {
+    color: transparent;
+}
+.modal[data-id="icon"] .button[data-action="remove"] {
+    border-color: transparent;
+    color: var(--color-red-dark);
+}
+.modal[data-id="icon"] .button[data-action="remove"]:hover {
+    border-color: var(--color-red-dark);
+    color: var(--color-red-dark);
+}
+.modal[data-id="icon"][data-mode="remove"] .button[data-action="remove"] {
+    background: var(--color-red-dark);
+    border-color: var(--color-red-dark);
+    color: var(--text-color-invert);
+}
+.modal[data-id="icon"][data-mode="remove"] .button[data-remove="true"] {
+    background: var(--bg-color-hover);
+    border-color: var(--color-red-dark);
+}
+
+#dashboard-settings .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-color: transparent;
+}
+#dashboard-settings .row:hover {
+    border-color: transparent;
+}
+#dashboard-settings .row .column {
+    display: flex;
+    width: 50%;
+    height: 100%;
+}
+#dashboard-settings .text {
+    font-size: var(--font-size);
+}
+#dashboard-settings select {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: calc(0.6 * var(--unit-size));
+    padding: 0 var(--gap-size);
+    font-size: var(--font-size);
+    background: transparent;
+    color: var(--text-color);
+    outline: none;
+}
+#dashboard-settings select option {
+    padding: 0 var(--gap-size);
+    font-size: var(--font-size);
+    background: var(--bg-color);
+    color: var(--text-color);
+}

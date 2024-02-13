@@ -1,0 +1,98 @@
+@media (max-width: 1024px) {
+
+:root {
+    --unit-size: 50px;
+    --gap-size: 10px;
+
+    --controls-unit-size: 30px;
+    --controls-gap-size: 10px;
+
+    --font-size: 16px;
+}
+
+.modal > .win > .close {
+    background: var(--color-red-dark);
+    border-color: var(--color-red-dark);
+    color: var(--text-color-invert);
+}
+
+#app {
+    flex-direction: column;
+    justify-content: start;
+    padding: var(--gap-size);
+}
+#app .app-column[data-category="back"] {
+    align-items: start;
+    min-width: 100%;
+    max-width: 100%;
+}
+#app .app-column[data-category="body"] {
+    height: 100%;
+}
+#app .app-column[data-category="back"] #back {
+    background: var(--color-blue-dark);
+    border-color: var(--color-blue-dark);
+    color: var(--text-color-invert) !important;
+}
+
+#dashboard {
+    width: 100%;
+}
+
+#lesson {
+    flex-direction: column;
+}
+#lesson > .column[data-category="controls"] {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+}
+#lesson > .column[data-category="history"] {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: var(--history-item-size);
+    margin: calc(2 * var(--gap-size)) 0 calc(1 * var(--gap-size));
+}
+#lesson-quiz {
+    gap: calc(1 * var(--gap-size));
+    margin: 0;
+}
+#lesson-quiz .question {
+    max-height: calc(3 * 1.2 * 1.5 * var(--font-size));
+    text-transform: none;
+    font-size: calc(1.5 * var(--font-size));
+    line-height: 1.2;
+    overflow-y: auto;
+}
+#lesson-keyboard .cell:hover {
+    background: transparent;
+    border-color: var(--border-color);
+}
+#lesson-keyboard .cell:hover::before {
+    color: var(--text-color);
+}
+#lesson-history {
+    justify-content: start;
+    width: auto;
+    max-width: 80vw;
+    min-height: var(--history-item-size);
+    max-height: var(--history-item-size);
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+#lesson-history .items {
+    flex-direction: row;
+    justify-content: start;
+}
+
+#lesson > .column[data-category="history"] #lesson-history .item {
+    color: var(--text-color);
+}
+#lesson > .column[data-category="history"] #lesson-history .item[data-label="is-solved"] {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+}
