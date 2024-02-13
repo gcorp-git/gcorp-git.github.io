@@ -500,6 +500,7 @@
     padding: 0 var(--gap-size);
     font-size: var(--font-size);
     background: transparent;
+    border: 1px solid var(--border-color);
     color: var(--text-color);
     outline: none;
 }
