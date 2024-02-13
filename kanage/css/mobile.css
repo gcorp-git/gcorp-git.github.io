@@ -1,7 +1,7 @@
 @media (max-width: 1024px) {
 
 :root {
-    --unit-size: 50px;
+    --unit-size: 60px;
     --gap-size: 10px;
 
     --controls-unit-size: 30px;
@@ -33,6 +33,7 @@
     background: var(--color-blue-dark);
     border-color: var(--color-blue-dark);
     color: var(--text-color-invert) !important;
+    position: absolute;
 }
 
 #dashboard {
@@ -66,12 +67,19 @@
     line-height: 1.2;
     overflow-y: auto;
 }
+#lesson-quiz .tape {
+    max-height: calc(3 * var(--unit-size));
+    overflow-y: auto;
+}
 #lesson-keyboard .cell:hover {
     background: transparent;
     border-color: var(--border-color);
 }
 #lesson-keyboard .cell:hover::before {
     color: var(--text-color);
+}
+#lesson-commands {
+    margin: 0 0 0 calc(2 * var(--gap-size));
 }
 #lesson-history {
     justify-content: start;
