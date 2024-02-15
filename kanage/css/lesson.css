@@ -44,9 +44,10 @@
     cursor: pointer;
 }
 #lesson-quiz .tape {
-    display: flex;
+    display: block;
     justify-content: center;
     flex-wrap: wrap;
+    text-align: center;
 }
 #lesson-quiz .tape .cell {
     display: inline-block;
