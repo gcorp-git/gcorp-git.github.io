@@ -12,17 +12,15 @@ export class Remove {
         this.parent.dom.$import.disabled = true
         this.parent.dom.$export.disabled = true
 
-        this.parent.dom.$save.hidden = false
-
         this.parent.rows.database.mode = RowsMode.Check
     }
     destroy() {
+        this.save()
+
         this.parent.dom.$add.disabled = false
         this.parent.dom.$edit.disabled = false
         this.parent.dom.$import.disabled = false
         this.parent.dom.$export.disabled = false
-        
-        this.parent.dom.$save.hidden = true
 
         this.parent.rows.database.mode = RowsMode.Default
     }

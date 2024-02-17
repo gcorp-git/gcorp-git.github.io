@@ -10,16 +10,14 @@ export class Remove {
         this.parent.dom.$add.disabled = true
         this.parent.dom.$edit.disabled = true
 
-        this.parent.dom.$save.hidden = false
-
         this.parent.rows.lessons.mode = RowsMode.Check
     }
     destroy() {
+        this.save()
+
         this.parent.dom.$add.disabled = false
         this.parent.dom.$edit.disabled = false
         
-        this.parent.dom.$save.hidden = true
-
         this.parent.rows.lessons.mode = RowsMode.Default
     }
     save() {

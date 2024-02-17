@@ -91,13 +91,6 @@
 #dashboard .controls .button[data-action="edit"] {
     font-size: calc(0.5 * var(--controls-unit-size));
 }
-#dashboard .controls .button[data-action="save"] {
-    border: 1px solid var(--border-color);
-    font-size: calc(0.5 * var(--controls-unit-size));
-}
-#dashboard .controls .button[data-action="save"]:hover {
-    border-color: var(--border-color-hover);
-}
 #dashboard .controls input {
     display: flex;
     width: 100%;

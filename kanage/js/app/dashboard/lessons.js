@@ -12,7 +12,6 @@ import { Remove } from './lessons/remove.js'
 const ICON = {
     ADD: '+',
     REMOVE: '🗑',
-    SAVE: '💾',
     EDIT: '✎',
     SEARCH: '🔎︎',
 }
@@ -105,12 +104,6 @@ export class Lessons {
             }))
         })
         
-        this.dom.events.select(DOMEvent.Save).subscribe(() => {
-            this.states.current.save()
-            
-            this.dom.mode = DOMMode.Default
-        })
-
         this.rows.lessons.events.select(RowsEvent.Open).subscribe(id => {
             this.states.current.open(id)
         })
@@ -159,7 +152,6 @@ export class Lessons {
 
 const DOMEvent = {
     Mode: Symbol(),
-    Save: Symbol(),
     Search: Symbol(),
 }
 
@@ -185,7 +177,6 @@ class LessonsDOM extends DOM {
         this.$add = undefined
         this.$edit = undefined
         this.$remove = undefined
-        this.$save = undefined
         this.$search = undefined
 
         this._mode = undefined
@@ -225,7 +216,6 @@ class LessonsDOM extends DOM {
         this.$add = this.$node.querySelector('button[data-action="add"]')
         this.$edit = this.$node.querySelector('button[data-action="edit"]')
         this.$remove = this.$node.querySelector('button[data-action="remove"]')
-        this.$save = this.$node.querySelector('button[data-action="save"]')
         this.$search = this.$node.querySelector('input[name="search"]')
 
         this.mode = DOMMode.Default
@@ -240,7 +230,6 @@ class LessonsDOM extends DOM {
                         <button class="button" data-action="add">${ICON.ADD}</button>
                         <button class="button" data-action="edit">${ICON.EDIT}</button>
                         <button class="button" data-action="remove">${ICON.REMOVE}</button>
-                        <button class="button" data-action="save">${ICON.SAVE}</button>
                         <div class="filler"></div>
                         <input type="search" name="search" autocomplete="off" placeholder="${ICON.SEARCH}"/>
                     </div>
@@ -282,11 +271,6 @@ class LessonsDOM extends DOM {
                     default: return DOMMode.Remove
                 }
             })
-        })
-
-        this.listeners.add(this.$save, 'click', e => {
-            if (e.which !== 1) return
-            this.events.select(DOMEvent.Save).publish()
         })
 
         this.listeners.add(this.$search, 'input', () => {

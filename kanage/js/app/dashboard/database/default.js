@@ -6,8 +6,6 @@ export class Default {
         this.app = this.parent.app
     }
     create() {
-        this.parent.dom.$save.hidden = true
-
         this.parent.rows.database.mode = RowsMode.Default
 
         this.parent.dom.$scrollContainer.scrollTop = 0

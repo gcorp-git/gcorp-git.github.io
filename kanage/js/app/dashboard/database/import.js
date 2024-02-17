@@ -61,6 +61,8 @@ export class Import {
         })
     }
     destroy() {
+        this.save()
+
         this.parent.dom.$add.disabled = false
         this.parent.dom.$edit.disabled = false
         this.parent.dom.$remove.disabled = false
@@ -68,8 +70,6 @@ export class Import {
 
         this.parent.rows.database.isVisible = true
         this.parent.rows.import.isVisible = false
-
-        this.parent.dom.$save.hidden = true
 
         this.parent.rows.import.destroy()
 
@@ -141,8 +141,6 @@ export class Import {
         this.parent.rows.import.checkAll()
 
         this.parent.rows.import.isVisible = true
-
-        this.parent.dom.$save.hidden = false
     }
 }
 

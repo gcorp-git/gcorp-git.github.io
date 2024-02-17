@@ -27,31 +27,12 @@ export class Edit {
 
             this.modal.icon.create()
         })
-
-        this.modal.edit.events.select(EditModalEvent.Save).subscribe(({icon, name}) => {
-            const id = this._id
-            const ids = this.parent.rows.database.getCheckedIds()
-            
-            this.app.store.select(StoreKey.Lessons).edit(data => {
-                data[id].icon = icon
-                data[id].name = name
-                data[id].ids = ids
-                
-                return data
-            })
-
-            this.app.store.select(StoreKey.Sessions).edit(data => {
-                delete data[id]
-
-                return data
-            })
-        })
     }
     destroy() {
+        this.save()
+
         this.parent.dom.$add.disabled = false
         this.parent.dom.$remove.disabled = false
-
-        this.parent.dom.$save.hidden = true
 
         this.parent.rows.lessons.isVisible = true
         this.parent.rows.database.isVisible = false
@@ -61,8 +42,6 @@ export class Edit {
         }
     }
     open(id) {
-        this.parent.dom.$save.hidden = false
-
         this.parent.rows.lessons.isVisible = false
         this.parent.rows.database.isVisible = true
 
@@ -76,13 +55,33 @@ export class Edit {
         this.modal.edit.create({icon, name})
     }
     save() {
-        this.modal.edit.save()
+        if (this._id === undefined) return
+
+        const {icon, name} = this.modal.edit.data
+
+        if (!icon || !name) return
+
+        const id = this._id
+        const ids = this.parent.rows.database.getCheckedIds()
+        
+        this.app.store.select(StoreKey.Lessons).edit(data => {
+            data[id].icon = icon
+            data[id].name = name
+            data[id].ids = ids
+            
+            return data
+        })
+
+        this.app.store.select(StoreKey.Sessions).edit(data => {
+            delete data[id]
+
+            return data
+        })
     }
 }
 
 const EditModalEvent = {
     ChooseIcon: Symbol(),
-    Save: Symbol(),
 }
 
 class EditModal {
@@ -94,6 +93,15 @@ class EditModal {
         this.$iconLabel = undefined
         this.$iconValue = undefined
         this.$iconInput = undefined
+    }
+    get data() {
+        const $icon = this.modal.$content.querySelector('input[name="icon"]')
+        const $name = this.modal.$content.querySelector('input[name="name"]')
+
+        return {
+            icon: $icon.value,
+            name: $name.value,
+        }
     }
     set icon(value) {
         this.$iconInput.value = value
@@ -131,14 +139,5 @@ class EditModal {
     destroy() {
         this.events.destroy()
         this.modal.destroy()
-    }
-    save() {
-        const $icon = this.modal.$content.querySelector('input[name="icon"]')
-        const $name = this.modal.$content.querySelector('input[name="name"]')
-
-        this.events.select(EditModalEvent.Save).publish({
-            icon: $icon.value,
-            name: $name.value,
-        })
     }
 }

@@ -27,7 +27,7 @@ export class Export {
 
             download(`KanageDatabase.${ext}`, encoded)
 
-            this.parent.save()
+            this.parent.setDefaultState()
         })
     }
     destroy() {
@@ -39,9 +39,6 @@ export class Export {
         this.parent.rows.database.isVisible = true
 
         this.modal.destroy()
-    }
-    save() {
-        //
     }
 }
 

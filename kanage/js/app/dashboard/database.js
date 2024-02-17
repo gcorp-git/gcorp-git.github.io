@@ -15,7 +15,6 @@ const ICON = {
     ADD: '+',
     EDIT: '✎',
     REMOVE: '🗑',
-    SAVE: '💾',
     IMPORT: '⇚',
     EXPORT: '⇛',
     SEARCH: '🔎︎',
@@ -108,10 +107,6 @@ export class Database {
             }
         })
         
-        this.dom.events.select(DOMEvent.Save).subscribe(() => {
-            this.save()
-        })
-
         this.rows.database.events.select(RowsEvent.Open).subscribe(id => {
             switch (this.states.current.id) {
                 case DatabaseState.Default: {
@@ -156,18 +151,13 @@ export class Database {
 
         this.dom.destroy()
     }
-    save() {
-        this.states.current.save()
-
-        if (this.states.current.id !== DatabaseState.Edit) {
-            this.dom.mode = DOMMode.Default
-        }
+    setDefaultState() {
+        this.dom.mode = DOMMode.Default
     }
 }
 
 const DOMEvent = {
     Mode: Symbol(),
-    Save: Symbol(),
     Search: Symbol(),
 }
 
@@ -195,7 +185,6 @@ class DatabaseDOM extends DOM {
         this.$add = undefined
         this.$edit = undefined
         this.$remove = undefined
-        this.$save = undefined
         this.$search = undefined
         this.$import = undefined
         this.$export = undefined
@@ -239,7 +228,6 @@ class DatabaseDOM extends DOM {
         this.$add = this.$node.querySelector('button[data-action="add"]')
         this.$edit = this.$node.querySelector('button[data-action="edit"]')
         this.$remove = this.$node.querySelector('button[data-action="remove"]')
-        this.$save = this.$node.querySelector('button[data-action="save"]')
         this.$search = this.$node.querySelector('input[name="search"]')
         this.$import = this.$node.querySelector('button[data-action="import"]')
         this.$export = this.$node.querySelector('button[data-action="export"]')
@@ -256,7 +244,6 @@ class DatabaseDOM extends DOM {
                         <button class="button" data-action="add">${ICON.ADD}</button>
                         <button class="button" data-action="edit">${ICON.EDIT}</button>
                         <button class="button" data-action="remove">${ICON.REMOVE}</button>
-                        <button class="button" data-action="save">${ICON.SAVE}</button>
                         <div class="filler"></div>
                         <button class="button" data-action="import">${ICON.IMPORT}</button>
                         <button class="button" data-action="export">${ICON.EXPORT}</button>
@@ -300,11 +287,6 @@ class DatabaseDOM extends DOM {
                     default: return DOMMode.Remove
                 }
             })
-        })
-
-        this.listeners.add(this.$save, 'click', e => {
-            if (e.which !== 1) return
-            this.events.select(DOMEvent.Save).publish()
         })
 
         this.listeners.add(this.$import, 'click', e => {

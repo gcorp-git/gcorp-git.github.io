@@ -7,8 +7,6 @@ export class Default {
         this.app = this.parent.app
     }
     create() {
-        this.parent.dom.$save.hidden = true
-
         this.parent.rows.lessons.isVisible = true
         this.parent.rows.database.isVisible = false
 

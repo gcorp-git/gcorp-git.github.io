@@ -21,8 +21,6 @@ export class Add {
         this.parent.dom.$edit.disabled = true
         this.parent.dom.$remove.disabled = true
         
-        this.parent.dom.$save.hidden = false
-
         this.parent.rows.lessons.isVisible = false
         this.parent.rows.database.isVisible = true
 
@@ -39,22 +37,12 @@ export class Add {
 
             this.modal.icon.create()
         })
-
-        this.modal.add.events.select(AddModalEvent.Save).subscribe(({icon, name}) => {
-            const ids = this.parent.rows.database.getCheckedIds()
-
-            this.app.store.select(StoreKey.Lessons).edit(data => {
-                data.push({icon, name, ids})
-
-                return data
-            })
-        })
     }
     destroy() {
+        this.save()
+
         this.parent.dom.$edit.disabled = false
         this.parent.dom.$remove.disabled = false
-
-        this.parent.dom.$save.hidden = true
 
         this.parent.rows.lessons.isVisible = true
         this.parent.rows.database.isVisible = false
@@ -64,13 +52,22 @@ export class Add {
         }
     }
     save() {
-        this.modal.add.save()
+        const {icon, name} = this.modal.add.data
+
+        if (!icon || !name) return
+
+        const ids = this.parent.rows.database.getCheckedIds()
+
+        this.app.store.select(StoreKey.Lessons).edit(data => {
+            data.push({icon, name, ids})
+
+            return data
+        })
     }
 }
 
 const AddModalEvent = {
     ChooseIcon: Symbol(),
-    Save: Symbol(),
 }
 
 class AddModal {
@@ -82,6 +79,15 @@ class AddModal {
         this.$iconLabel = undefined
         this.$iconValue = undefined
         this.$iconInput = undefined
+    }
+    get data() {
+        const $icon = this.modal.$content.querySelector('input[name="icon"]')
+        const $name = this.modal.$content.querySelector('input[name="name"]')
+
+        return {
+            icon: $icon.value,
+            name: $name.value,
+        }
     }
     set icon(value) {
         this.$iconInput.value = value
@@ -118,14 +124,5 @@ class AddModal {
     destroy() {
         this.events.destroy()
         this.modal.destroy()
-    }
-    save() {
-        const $icon = this.modal.$content.querySelector('input[name="icon"]')
-        const $name = this.modal.$content.querySelector('input[name="name"]')
-
-        this.events.select(AddModalEvent.Save).publish({
-            icon: $icon.value,
-            name: $name.value,
-        })
     }
 }

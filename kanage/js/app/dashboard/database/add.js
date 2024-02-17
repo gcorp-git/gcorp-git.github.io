@@ -1,5 +1,4 @@
 import { INDEX } from '../../../data.js'
-import { Feed } from '../../../utils/feed.js'
 import { Modal } from '../../../utils/modal.js'
 import { StoreKey } from '../../../data.js'
 
@@ -21,53 +20,53 @@ export class Add {
         this.parent.dom.$import.disabled = true
         this.parent.dom.$export.disabled = true
         
-        this.parent.dom.$save.hidden = false
-
         this.modal.create()
-
-        this.modal.events.select(AddModalEvent.Save).subscribe(({translation, kana, kanji}) => {
-            if (!kana || (!translation && !kanji)) return
-            
-            this.app.store.select(StoreKey.Database).edit(data => {
-                const id = data.uid++
-                const item = []
-
-                item[INDEX.TRANSLATION] = translation
-                item[INDEX.KANA] = kana
-                item[INDEX.KANJI] = kanji
-
-                data.items[id] = item
-
-                return data
-            })
-
-            this.modal.destroy()
-        })
     }
     destroy() {
+        this.save()
+
         this.parent.dom.$edit.disabled = false
         this.parent.dom.$remove.disabled = false
         this.parent.dom.$import.disabled = false
         this.parent.dom.$export.disabled = false
 
-        this.parent.dom.$save.hidden = true
-
         this.modal.destroy()
     }
     save() {
-        this.modal.save()
-    }
-}
+        const {translation, kana, kanji} = this.modal.data
 
-const AddModalEvent = {
-    Save: Symbol(),
+        if (!kana || (!translation && !kanji)) return
+        
+        this.app.store.select(StoreKey.Database).edit(data => {
+            const id = data.uid++
+            const item = []
+
+            item[INDEX.TRANSLATION] = translation
+            item[INDEX.KANA] = kana
+            item[INDEX.KANJI] = kanji
+
+            data.items[id] = item
+
+            return data
+        })
+    }
 }
 
 class AddModal {
     constructor(dom) {
         this.dom = dom
         this.modal = new Modal('modal')
-        this.events = new Feed(AddModalEvent)
+    }
+    get data() {
+        const $translation = this.modal.$content.querySelector('input[name="translation"]')
+        const $kana = this.modal.$content.querySelector('input[name="kana"]')
+        const $kanji = this.modal.$content.querySelector('input[name="kanji"]')
+
+        return {
+            translation: $translation.value,
+            kana: $kana.value,
+            kanji: $kanji.value,
+        }
     }
     create() {
         this.modal.destroy()
@@ -88,18 +87,6 @@ class AddModal {
         `
     }
     destroy() {
-        this.events.destroy()
         this.modal.destroy()
-    }
-    save() {
-        const $translation = this.modal.$content.querySelector('input[name="translation"]')
-        const $kana = this.modal.$content.querySelector('input[name="kana"]')
-        const $kanji = this.modal.$content.querySelector('input[name="kanji"]')
-
-        this.events.select(AddModalEvent.Save).publish({
-            translation: $translation.value,
-            kana: $kana.value,
-            kanji: $kanji.value,
-        })
     }
 }
